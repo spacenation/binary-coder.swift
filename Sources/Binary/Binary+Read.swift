@@ -7,9 +7,17 @@ extension Binary {
     }
     
     public mutating func readBits(_ count: Int) throws -> Int {
-        let increment = count - 1
-        defer { cursor += increment }
-        return try bits(cursor...cursor + increment)
+        defer { cursor += count }
+        return try bits(cursor...cursor + count - 1)
+    }
+    
+    public mutating func readBits<T>(_ type: T.Type, count: Int = MemoryLayout<T>.size * .byteSize) throws -> T {
+        print(count)
+        defer { cursor += count }
+        let data = try bytes(cursor...cursor + count - 1)
+        return withUnsafeBytes(of: Data(data).prefix(count / .byteSize)) {
+            $0.baseAddress!.assumingMemoryBound(to: T.self).pointee
+        }
     }
 }
 
