@@ -8,7 +8,7 @@ public final class BinaryEncoder {
     }
     
     public func encode<T>(_ value: T, count: Int = MemoryLayout<T>.size * .byteSize) {
-        binary.writeBits(value, count: count)
+        binary.write(value, size: count)
     }
     
     public func encode<T: BinaryEncodable>(_ value: T, count: Int = MemoryLayout<T>.size * .byteSize) throws {

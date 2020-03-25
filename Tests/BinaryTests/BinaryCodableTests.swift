@@ -5,10 +5,10 @@ final class BinaryCodableTests: XCTestCase {
     func testBinaryDecodable() {
         XCTAssertEqual(try? BinaryDecoder.decode(UInt8.self, from: Data([0b0000_1111])), 15)
         XCTAssertEqual(try? BinaryDecoder.decode(UInt16.self, from: Data([0b0000_0000, 0b1111_0000])), 61440)
-        XCTAssertEqual(try? BinaryDecoder.decode(Data.self, count: 16, from: Data([0b1111_0000, 0b0000_0000])), Data([0b1111_0000, 0b0000_0000]))
+        XCTAssertEqual(try? BinaryDecoder.decode(Data.self, size: 16, from: Data([0b1111_0000, 0b0000_0000])), Data([0b1111_0000, 0b0000_0000]))
         
         XCTAssertEqual(
-            String(data: try! BinaryDecoder.decode(Data.self, count: 6 * .byteSize, from: Data([66, 105, 110, 97, 114, 121])), encoding: .utf8),
+            String(data: try! BinaryDecoder.decode(Data.self, size: 6 * .byteSize, from: Data([66, 105, 110, 97, 114, 121])), encoding: .utf8),
             "Binary"
         )
     }
@@ -47,7 +47,6 @@ final class BinaryCodableTests: XCTestCase {
 }
 
 private struct Message<Flags: Equatable & BinaryCodable>: Equatable, BinaryCodable {
-    
     let source: UInt8
     let data: Data
     let flags: Flags
@@ -59,17 +58,17 @@ private struct Message<Flags: Equatable & BinaryCodable>: Equatable, BinaryCodab
     }
     
     init(from decoder: BinaryDecoder) throws {
-        source = try decoder.decode(UInt8.self)
-        data = try decoder.decode(Data.self, count: 8)
+        source = try decoder.decode()
+        data = try decoder.decode(size: .byte)
         try decoder.skip(count: 6)
-        flags = try decoder.decode(Flags.self)
+        flags = try decoder.decode()
     }
     
     func encode(to encoder: BinaryEncoder) throws {
         encoder.encode(source)
-        encoder.encode(data, count: 8)
+        encoder.encode(data, count: .byte)
         encoder.skip(count: 6)
-        try encoder.encode(flags, count: 2)
+        try encoder.encode(flags, count: .bits(2))
     }
 }
 

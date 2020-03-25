@@ -6,16 +6,10 @@ extension Binary {
         return try bit(cursor)
     }
     
-    public mutating func readBits(_ count: Int) throws -> Int {
-        defer { cursor += count }
-        return try bits(cursor...cursor + count - 1)
-    }
-    
-    public mutating func readBits<T>(_ type: T.Type, count: Int = MemoryLayout<T>.size * .byteSize) throws -> T {
-        print(count)
-        defer { cursor += count }
-        let data = try bytes(cursor...cursor + count - 1)
-        return withUnsafeBytes(of: Data(data).prefix(count / .byteSize)) {
+    public mutating func read<T>(_ type: T.Type = T.self, size: Size = MemoryLayout<T>.size * .byteSize) throws -> T {
+        defer { cursor += size }
+        let data = try bytes(bitRange: cursor...cursor + size - 1)
+        return withUnsafeBytes(of: Data(data).prefix(size / .byteSize)) {
             $0.baseAddress!.assumingMemoryBound(to: T.self).pointee
         }
     }
