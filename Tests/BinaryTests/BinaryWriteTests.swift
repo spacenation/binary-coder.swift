@@ -30,7 +30,7 @@ final class BinaryWriteTests: XCTestCase {
         XCTAssertEqual(binary.cursor, 33)
         XCTAssertEqual(binary.bytes, [0b1000_0001, 0b1111_1101, 0b1111_1111, 0b0000_0000, 0b1000_0000])
                 
-        binary.skip(count: 6)
+        binary.writeEmpty(size: .byte - 2)
         XCTAssertEqual(binary.cursor, 39)
         XCTAssertEqual(binary.bytes, [0b1000_0001, 0b1111_1101, 0b1111_1111, 0b0000_0000, 0b1000_0000])
         

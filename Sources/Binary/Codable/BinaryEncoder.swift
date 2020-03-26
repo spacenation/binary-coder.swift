@@ -17,8 +17,8 @@ public final class BinaryEncoder {
 }
 
 public extension BinaryEncoder {
-    func skip(count: Int) {
-        binary.skip(count: count)
+    func encodeEmpty(size: Binary.Size) {
+        binary.writeEmpty(size: size)
     }
     
     func encodeBool(_ value: Bool) {

@@ -1,7 +1,7 @@
 import Foundation
 
 public extension Binary {
-    mutating func skip(count: Int) {
-        cursor += count
+    mutating func skip(size: Size) {
+        cursor += size
     }
 }
