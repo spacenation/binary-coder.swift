@@ -60,14 +60,14 @@ private struct Message<Flags: Equatable & BinaryCodable>: Equatable, BinaryCodab
     init(from decoder: BinaryDecoder) throws {
         source = try decoder.decode()
         data = try decoder.decode(size: .byte)
-        try decoder.skip(count: 6)
+        try decoder.skip(size: 6)
         flags = try decoder.decode()
     }
     
     func encode(to encoder: BinaryEncoder) throws {
         encoder.encode(source)
         encoder.encode(data, count: .byte)
-        encoder.skip(count: 6)
+        encoder.encodeEmpty(size: 6)
         try encoder.encode(flags, count: .bits(2))
     }
 }

@@ -17,8 +17,8 @@ public final class BinaryDecoder {
 }
 
 public extension BinaryDecoder {
-    func skip(count: Int) throws {
-        binary.skip(count: count)
+    func skip(size: Binary.Size) throws {
+        binary.skip(size: size)
     }
     
     func decodeBool() throws -> Bool {

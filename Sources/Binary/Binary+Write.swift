@@ -35,4 +35,8 @@ extension Binary {
     public mutating func writeBool(_ value: Bool) {
         writeBit(value ? 1 : 0)
     }
+    
+    public mutating func writeEmpty(size: Size) {
+        write(0, size: size)
+    }
 }
