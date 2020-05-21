@@ -1,3 +1,3 @@
-![ci](https://github.com/spacenation/binary.swift/workflows/ci/badge.svg)
+![ci](https://github.com/swift-extensions/binary/workflows/ci/badge.svg)
 
 ## Binary
