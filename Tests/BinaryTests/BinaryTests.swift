@@ -1,11 +1,7 @@
 import XCTest
 import Binary
 
-final class BinaryTests: XCTestCase {
-    func testEquatable() {
-        XCTAssertEqual(Binary(bytes: [0b0000_00001]), Binary(bytes: [1]))
-    }
-    
+final class BinaryTests: XCTestCase {    
     func testBytes() {
         XCTAssertEqual(withUnsafeBytes(of: Data([0b0000_0000, 0b1111_0000])) {
             $0.baseAddress!.assumingMemoryBound(to: UInt16.self).pointee
@@ -17,6 +13,6 @@ final class BinaryTests: XCTestCase {
     }
 
     static var allTests = [
-        ("testEquatable", testEquatable),
+        ("testBytes", testBytes),
     ]
 }
