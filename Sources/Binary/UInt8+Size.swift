@@ -1,12 +1,10 @@
 import Foundation
 
-public typealias Binary = [UInt8]
-
-extension Binary {
+extension Array where Element == UInt8 {
     public typealias Size = Int
 }
 
-extension Binary.Size {
+extension Array<UInt8>.Size {
     public static let indexOfLastBitInByte: Int = 7
     
     public static var bit: Int = 1

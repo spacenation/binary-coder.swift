@@ -1,7 +1,7 @@
 import Foundation
 
 public final class BinaryEncoder {
-    public internal(set) var bytes: Binary
+    public internal(set) var bytes: [UInt8]
     public internal(set) var cursor: Int
     
     public init() {
@@ -9,7 +9,7 @@ public final class BinaryEncoder {
         self.cursor = 0
     }
     
-    public func encode<T>(_ value: T, size: Binary.Size = MemoryLayout<T>.size * .byte) {
+    public func encode<T>(_ value: T, size: Array<UInt8>.Size = MemoryLayout<T>.size * .byte) {
         var value = value
         var counter = 0
         withUnsafeBytes(of: &value) { pointer in
@@ -43,26 +43,24 @@ extension BinaryEncoder {
         }
         cursor += 1
     }
-    
 
-    
     public func encodeBool(_ value: Bool) {
         encodeBit(value ? 1 : 0)
     }
     
-    public func encodeEmpty(size: Binary.Size) {
+    public func encodeEmpty(size: Array<UInt8>.Size) {
         encode(0, size: size)
     }
 }
 
 public extension BinaryEncoder {
-    static func encode<T>(_ value: T, size: Binary.Size = MemoryLayout<T>.size * .byte) -> Binary {
+    static func encode<T>(_ value: T, size: Array<UInt8>.Size = MemoryLayout<T>.size * .byte) -> [UInt8] {
         let encoder = BinaryEncoder()
         encoder.encode(value, size: size)
         return encoder.bytes
     }
     
-    static func encode<T: BinaryEncodable>(_ value: T) throws -> Binary {
+    static func encode<T: BinaryEncodable>(_ value: T) throws -> [UInt8] {
         let encoder = BinaryEncoder()
         try value.encode(to: encoder)
         return encoder.bytes

@@ -1,6 +1,6 @@
 import Foundation
 
-extension Binary {
+extension Array where Element == UInt8 {
     public func bit(_ index: Int) throws -> UInt8 {
         let byteIndex = index / .byte
         guard (0..<self.count).contains(byteIndex) else {

@@ -1,10 +1,10 @@
 import Foundation
 
 public final class BinaryDecoder {
-    private let bytes: Binary
+    private let bytes: [UInt8]
     public internal(set) var cursor: Int
     
-    public init(bytes: Binary) {
+    public init(bytes: [UInt8]) {
         self.bytes = bytes
         self.cursor = 0
     }
@@ -15,7 +15,7 @@ public final class BinaryDecoder {
 }
 
 extension BinaryDecoder {
-    public func skip(size: Binary.Size) throws {
+    public func skip(size: Array<UInt8>.Size) throws {
         guard cursor + size < bytes.count * .byte else { throw BinaryError.indexOutOfBounds }
         cursor += size
     }
@@ -29,7 +29,7 @@ extension BinaryDecoder {
         try decodeBit() != 0
     }
     
-    public func decode<T>(_ type: T.Type = T.self, size: Binary.Size = MemoryLayout<T>.size * .byte) throws -> T {
+    public func decode<T>(_ type: T.Type = T.self, size: Array<UInt8>.Size = MemoryLayout<T>.size * .byte) throws -> T {
         defer { cursor += size }
         let data = try bytes.bytes(bitRange: cursor...cursor + size - 1)
         return withUnsafeBytes(of: Data(data).prefix(size / .byte)) {
@@ -39,12 +39,12 @@ extension BinaryDecoder {
 }
 
 public extension BinaryDecoder {
-    static func decode<T>(_ type: T.Type, size: Binary.Size = MemoryLayout<T>.size * .byte, from bytes: Binary) throws -> T {
+    static func decode<T>(_ type: T.Type, size: Array<UInt8>.Size = MemoryLayout<T>.size * .byte, from bytes: [UInt8]) throws -> T {
         let decoder = BinaryDecoder(bytes: bytes)
         return try decoder.decode(type, size: size)
     }
     
-    static func decode<T: BinaryDecodable>(_ type: T.Type, from bytes: Binary) throws -> T {
+    static func decode<T: BinaryDecodable>(_ type: T.Type, from bytes: [UInt8]) throws -> T {
         try T(from: BinaryDecoder(bytes: bytes))
     }
 }

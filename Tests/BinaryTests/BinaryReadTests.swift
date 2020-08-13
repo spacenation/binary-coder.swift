@@ -1,15 +1,15 @@
 import XCTest
 import Binary
 
-final class BinaryGetTests: XCTestCase {
-    func testGetBit() {
+final class BinaryReadTests: XCTestCase {
+    func testReadBit() {
         XCTAssertEqual(try? [0b0000_0001].bit(6), 0)
         XCTAssertEqual(try? [0b0000_0001].bit(7), 1)
         XCTAssertEqual(try? [0b0000_0001, 0b1111_1111].bit(8), 1)
         XCTAssertEqual(try? [0b0000_0001].bit(8), nil)
     }
     
-    func testGetBytes() {
+    func testReadBytes() {
         XCTAssertEqual(try? [0b0000_1111, 0b1011_0000].byte(1), 0b1011_0000)
         XCTAssertEqual(try? [0b0000_1111, 0b1011_0000].byte(atBitIndex: 4), 0b1111_1011)
         XCTAssertEqual(try? [0b0000_1111, 0b1011_0000].bytes(bitRange: 0...15), [0b0000_1111, 0b1011_0000])
@@ -18,6 +18,7 @@ final class BinaryGetTests: XCTestCase {
     }
 
     static var allTests = [
-        ("testGetBit", testGetBit)
+        ("testReadBit", testReadBit),
+        ("testReadBytes", testReadBytes)
     ]
 }
