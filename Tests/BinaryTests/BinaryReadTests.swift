@@ -2,22 +2,23 @@ import XCTest
 import Binary
 
 final class BinaryReadTests: XCTestCase {
-    func testReadBits() {
-        var binary = Binary(bytes: [0b1000_0110, 0b0000_1111, 0b1111_0011])
-        XCTAssertEqual(binary.cursor, 0)
-        XCTAssertEqual(try? binary.readBit(), 1)
-        XCTAssertEqual(binary.cursor, 1)
-        XCTAssertEqual(try? binary.read(size: 6), 0b0000_1100)
-        XCTAssertEqual(binary.cursor, 7)
-        XCTAssertEqual(try? binary.readBool(), false)
-        XCTAssertEqual(binary.cursor, 8)
-        XCTAssertEqual(try? binary.read(UInt8.self), 15)
-        XCTAssertEqual(binary.cursor, 16)
-        XCTAssertEqual(try! binary.read(Data.self, size: .byte), Data([0b1111_0011]))
-        XCTAssertEqual(binary.cursor, 24)
+    func testReadBit() {
+        XCTAssertEqual(try? [0b0000_0001].bit(6), 0)
+        XCTAssertEqual(try? [0b0000_0001].bit(7), 1)
+        XCTAssertEqual(try? [0b0000_0001, 0b1111_1111].bit(8), 1)
+        XCTAssertEqual(try? [0b0000_0001].bit(8), nil)
+    }
+    
+    func testReadBytes() {
+        XCTAssertEqual(try? [0b0000_1111, 0b1011_0000].byte(1), 0b1011_0000)
+        XCTAssertEqual(try? [0b0000_1111, 0b1011_0000].byte(atBitIndex: 4), 0b1111_1011)
+        XCTAssertEqual(try? [0b0000_1111, 0b1011_0000].bytes(bitRange: 0...15), [0b0000_1111, 0b1011_0000])
+        XCTAssertEqual(try? [0b0000_1111, 0b1011_0000, 0b1111_1111].bytes(bitRange: 4...19), [0b1111_1011, 0b0000_1111])
+        XCTAssertEqual(try? [0b1000_1111].bytes(bitRange: 0...4), [0b1000_1000])
     }
 
     static var allTests = [
-        ("testReadBits", testReadBits),
+        ("testReadBit", testReadBit),
+        ("testReadBytes", testReadBytes)
     ]
 }
