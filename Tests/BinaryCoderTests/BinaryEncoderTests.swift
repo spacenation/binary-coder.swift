@@ -1,5 +1,5 @@
 import XCTest
-import Binary
+import BinaryCoder
 
 final class BinaryEncoderTests: XCTestCase {
     func testEncodeBits() {

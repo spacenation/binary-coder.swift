@@ -1,38 +1,45 @@
-![ci](https://github.com/swift-extensions/binary/workflows/ci/badge.svg)
+![ci](https://github.com/spacenation/binary-coder.swift/workflows/ci/badge.svg)
 
-## Binary
+## BinaryCoder
+SPM package to decode and encode types from binary data.
 
-- BinaryReader
-- BinaryEncoder
-- BinaryDecoder
-- BinaryScaler
-
-## Binary type scaler
-
-Custom `%`  prefix operator to scale binary integers proportionality between integer types.
-
-- Works with UInt8, Unt16, UInt32, UInt64
-- Works with Float and Double
-- Fast conversion with binary shifting
-- Scaling up and down
-
-### Unsigned Integers
+### Binary Decoder
 ```swift
-let result: UInt16 = %UInt8(255)
-/// Result is 65535
-
-let result: UInt16 = %UInt8(128)
-/// Result is 32896
+try? BinaryDecoder.decode(Message<DeliveryFlags>.self, from: [0b0000_1111, 0b1111_1111, 0b0000_0011])
 ```
 
-### Floating Points
+### Binary Encoder
 ```swift
-let result: UInt8 = %0.5
-/// Result is 127
+try? BinaryEncoder.encode(Message(source: 15, data: Data([0b1111_1111]), flags: DeliveryFlags(isDelivered: true, isRead: true)))
+```
 
-let result: UInt16 = %1.0
-/// Result is 65535
-/// Operator is using UnitInterval (0.0...1.0) as base range for scaling.
+### Example
+```swift
+private struct Message<Flags: Equatable & BinaryCodable>: Equatable, BinaryCodable {
+    let source: UInt8
+    let data: Data
+    let flags: Flags
+    
+    init(source: UInt8, data: Data, flags: Flags) {
+        self.source = source
+        self.data = data
+        self.flags = flags
+    }
+    
+    init(from decoder: BinaryDecoder) throws {
+        source = try decoder.decode()
+        data = try decoder.decode(size: .byte)
+        try decoder.skip(size: 6)
+        flags = try decoder.decode()
+    }
+    
+    func encode(to encoder: BinaryEncoder) throws {
+        encoder.encode(source)
+        encoder.encode(data, size: .byte)
+        encoder.encodeEmpty(size: 6)
+        try encoder.encode(flags)
+    }
+}
 ```
 
 ## Code Contributions

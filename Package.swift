@@ -4,12 +4,12 @@
 import PackageDescription
 
 let package = Package(
-    name: "Binary",
+    name: "BinaryCoder",
     products: [
-        .library(name: "Binary", targets: ["Binary"])
+        .library(name: "BinaryCoder", targets: ["BinaryCoder"])
     ],
     targets: [
-        .target(name: "Binary", dependencies: []),
-        .testTarget(name: "BinaryTests", dependencies: ["Binary"])
+        .target(name: "BinaryCoder", dependencies: []),
+        .testTarget(name: "BinaryCoderTests", dependencies: ["BinaryCoder"])
     ]
 )
