@@ -1,4 +1,5 @@
 import Foundation
+import Binary
 
 public final class BinaryDecoder {
     private let bytes: [UInt8]
@@ -22,7 +23,7 @@ extension BinaryDecoder {
     
     public func decodeBit() throws -> UInt8 {
         defer { cursor += 1 }
-        return try bytes.bit(cursor)
+        return try bytes.bitAsByte(cursor)
     }
     
     public func decodeBool() throws -> Bool {
