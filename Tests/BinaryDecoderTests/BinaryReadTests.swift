@@ -3,10 +3,10 @@ import BinaryDecoder
 
 final class BinaryReadTests: XCTestCase {
     func testReadBit() {
-        XCTAssertEqual(try? [0b0000_0001].bit(6), 0)
-        XCTAssertEqual(try? [0b0000_0001].bit(7), 1)
-        XCTAssertEqual(try? [0b0000_0001, 0b1111_1111].bit(8), 1)
-        XCTAssertEqual(try? [0b0000_0001].bit(8), nil)
+        XCTAssertEqual([0b0000_0001].bit(6), .zero)
+        XCTAssertEqual([0b0000_0001].bit(7), .one)
+        XCTAssertEqual([0b0000_0001, 0b1111_1111].bit(8), .one)
+        XCTAssertEqual([0b0000_0001].bit(8), nil)
     }
     
     func testReadBytes() {
