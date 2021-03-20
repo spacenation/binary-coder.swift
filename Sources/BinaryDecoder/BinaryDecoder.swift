@@ -1,5 +1,6 @@
 import Foundation
-import Binary
+@_exported import Decoder
+@_exported import Binary
 
 public final class BinaryDecoder {
     private let bytes: [UInt8]
