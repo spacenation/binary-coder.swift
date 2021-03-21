@@ -21,6 +21,27 @@ final class BinaryDecoderTests: XCTestCase {
         
     }
     
+    func testTypeBuilding() {
+        struct Options: Equatable {
+            let this: UInt8
+            let that: UInt8
+            let other: UInt16
+        }
+        
+        let coder = curry(Options.init)
+            <^> type(UInt8.self)
+            <*> (bit.count(8) *> type(UInt8.self))
+            <*> type(UInt16.self)
+        
+        switch coder.decode(BinaryReader(bytes: [0b0000_0001, 0b0000_0000, 0b0000_0010, 0b0000_0011, 0b0000_0000])) {
+        case .success((let options, _)):
+            XCTAssertEqual(options, Options(this: 1, that: 2, other: 3))
+        case .failure(_):
+            XCTFail()
+        }
+        
+    }
+    
     func testBitDecoder() {
         let coder = zero <|> one *> bit
         
