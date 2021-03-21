@@ -24,8 +24,17 @@
         "repositoryURL": "git@github.com:spacenation/decoder.swift.git",
         "state": {
           "branch": null,
-          "revision": "a9ef04faebf3948daf81095d8bb0cca060d44ce1",
-          "version": "0.3.1"
+          "revision": "cb25aef34f18f1da6b8a099578f83e3ae69a05a3",
+          "version": "0.4.0"
+        }
+      },
+      {
+        "package": "Functional",
+        "repositoryURL": "git@github.com:spacenation/functional.swift.git",
+        "state": {
+          "branch": null,
+          "revision": "2c25b0638f48ede4c68a8b6ec0c71b81a1d31085",
+          "version": "0.3.0"
         }
       }
     ]
