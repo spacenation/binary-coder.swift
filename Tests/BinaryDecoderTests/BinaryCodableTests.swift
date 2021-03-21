@@ -6,8 +6,7 @@ final class BinaryCodableTests: XCTestCase {
         XCTAssertEqual(try? BinaryDecoder.decode(UInt8.self, from: [0b0000_1111]), 15)
         XCTAssertEqual(try? BinaryDecoder.decode(UInt16.self, from: [0b0000_0000, 0b1111_0000]), 61440)
         XCTAssertEqual(try? BinaryDecoder.decode(Data.self, size: 16, from: [0b1111_0000, 0b0000_0000]), Data([0b1111_0000, 0b0000_0000]))
-        
-        XCTAssertEqual(
+            XCTAssertEqual(
             String(data: try! BinaryDecoder.decode(Data.self, size: 6 * .byte, from: [66, 105, 110, 97, 114, 121]), encoding: .utf8),
             "Binary"
         )

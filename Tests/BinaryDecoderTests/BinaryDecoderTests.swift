@@ -6,15 +6,15 @@ final class BinaryDecoderTests: XCTestCase {
     
     func testTypeDecoding() {
         struct Options: Equatable {
-            let this: Bool
-            let that: Bool
+            let this: UInt8
+            let that: UInt8
         }
         
-        let coder = bool.apply(bool.map(curry(Options.init)))
+        let coder = type(Options.self)
         
-        switch coder.decode(BinaryReader(bytes: [0b1101_0000])) {
+        switch coder.decode(BinaryReader(bytes: [0b0000_0001, 0b0000_0010])) {
         case .success((let options, _)):
-            XCTAssertEqual(options, Options(this: true, that: true))
+            XCTAssertEqual(options, Options(this: 1, that: 2))
         case .failure(_):
             XCTFail()
         }

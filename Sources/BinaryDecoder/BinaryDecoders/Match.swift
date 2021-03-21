@@ -15,3 +15,5 @@ public func match(_ bit: Bit) -> Decoder<BinaryReader, Bit, BinaryDecodingFailur
 public let zero: Decoder<BinaryReader, Bit, BinaryDecodingFailure> = match(.zero)
 
 public let one: Decoder<BinaryReader, Bit, BinaryDecodingFailure> = match(.one)
+
+
