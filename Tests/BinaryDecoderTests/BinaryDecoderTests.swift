@@ -1,6 +1,6 @@
 import XCTest
 import BinaryDecoder
-import Currying
+import Functional
 
 final class BinaryDecoderTests: XCTestCase {
     
@@ -22,7 +22,7 @@ final class BinaryDecoderTests: XCTestCase {
     }
     
     func testBitDecoder() {
-        let coder = zero.discard(bit).discard(zero).discard(one)
+        let coder = zero <|> one *> bit
         
         switch coder.decode(BinaryReader(bytes: [0b0101_0000])) {
         case .success(_):
