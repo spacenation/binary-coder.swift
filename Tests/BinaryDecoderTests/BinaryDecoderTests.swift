@@ -30,7 +30,7 @@ final class BinaryDecoderTests: XCTestCase {
         
         let coder = curry(Options.init)
             <^> type(UInt8.self)
-            <*> (bit.count(8) *> type(UInt8.self))
+            <*> bit.count(8).discardThen(type(UInt8.self))
             <*> type(UInt16.self)
         
         switch coder.decode(BinaryReader(bytes: [0b0000_0001, 0b0000_0000, 0b0000_0010, 0b0000_0011, 0b0000_0000])) {
