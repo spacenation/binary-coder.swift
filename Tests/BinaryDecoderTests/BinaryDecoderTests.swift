@@ -1,6 +1,7 @@
 import XCTest
 import BinaryDecoder
 import Functional
+import Binary
 
 final class BinaryDecoderTests: XCTestCase {
     
@@ -28,10 +29,12 @@ final class BinaryDecoderTests: XCTestCase {
             let other: UInt16
         }
         
-        let coder = curry(Options.init)
-            <^> type(UInt8.self)
-            <*> bit.count(8).discardThen(type(UInt8.self))
-            <*> type(UInt16.self)
+        var coder: BinaryDecoder<Options> {
+            curry(Options.init)
+                <^> type(UInt8.self)
+                <*> bit.count(8).discardThen(type(UInt8.self))
+                <*> type(UInt16.self)
+        }
         
         switch coder.decode(BinaryReader(bytes: [0b0000_0001, 0b0000_0000, 0b0000_0010, 0b0000_0011, 0b0000_0000])) {
         case .success((let options, _)):
@@ -52,23 +55,8 @@ final class BinaryDecoderTests: XCTestCase {
             XCTFail()
         }
     }
-    
-    func testDecodeBits() {
-        let binary = BinaryDecoder(bytes: [0b1000_0110, 0b0000_1111, 0b1111_0011])
-        XCTAssertEqual(binary.cursor, 0)
-        XCTAssertEqual(try? binary.decodeBit(), 1)
-        XCTAssertEqual(binary.cursor, 1)
-        XCTAssertEqual(try? binary.decode(size: 6), 0b0000_1100)
-        XCTAssertEqual(binary.cursor, 7)
-        XCTAssertEqual(try? binary.decodeBool(), false)
-        XCTAssertEqual(binary.cursor, 8)
-        XCTAssertEqual(try? binary.decode(UInt8.self), 15)
-        XCTAssertEqual(binary.cursor, 16)
-        XCTAssertEqual(try! binary.decode(Data.self, size: .byte), Data([0b1111_0011]))
-        XCTAssertEqual(binary.cursor, 24)
-    }
 
     static var allTests = [
-        ("testDecodeBits", testDecodeBits),
+        ("testBitDecoder", testBitDecoder),
     ]
 }

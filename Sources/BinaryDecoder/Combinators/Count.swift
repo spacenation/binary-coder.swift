@@ -1,9 +1,9 @@
 import Foundation
 import Binary
 
-public extension Decoder where Input == BinaryReader, Failure == BinaryDecodingFailure {
-    func count(_ n: UInt) -> Decoder<BinaryReader, [Element], BinaryDecodingFailure> {
-        Decoder<BinaryReader, [Element], BinaryDecodingFailure> { input in
+public extension BinaryDecoder {
+    func count(_ n: UInt) -> BinaryDecoder<[Element]> {
+        BinaryDecoder<[Element]> { input in
             var items: [Element] = []
             var input1 = input
             var error: BinaryDecodingFailure? = nil

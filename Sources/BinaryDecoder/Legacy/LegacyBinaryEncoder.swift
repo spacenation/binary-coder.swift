@@ -1,6 +1,6 @@
 import Foundation
 
-public final class BinaryEncoder {
+public final class LegacyBinaryEncoder {
     public internal(set) var bytes: [UInt8]
     public internal(set) var cursor: Int
     
@@ -31,7 +31,7 @@ public final class BinaryEncoder {
     }
 }
 
-extension BinaryEncoder {
+extension LegacyBinaryEncoder {
     public func encodeBit(_ value: UInt8) {
         let byte: UInt8 = value << Int(.indexOfLastBitInByte - (cursor % .byte))
         let index = cursor / .byte
@@ -53,15 +53,15 @@ extension BinaryEncoder {
     }
 }
 
-public extension BinaryEncoder {
+public extension LegacyBinaryEncoder {
     static func encode<T>(_ value: T, size: Array<UInt8>.Size = MemoryLayout<T>.size * .byte) -> [UInt8] {
-        let encoder = BinaryEncoder()
+        let encoder = LegacyBinaryEncoder()
         encoder.encode(value, size: size)
         return encoder.bytes
     }
     
     static func encode<T: BinaryEncodable>(_ value: T) throws -> [UInt8] {
-        let encoder = BinaryEncoder()
+        let encoder = LegacyBinaryEncoder()
         try value.encode(to: encoder)
         return encoder.bytes
     }

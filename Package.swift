@@ -9,11 +9,11 @@ let package = Package(
         .library(name: "BinaryDecoder", targets: ["BinaryDecoder"])
     ],
     dependencies: [
-        .package(name: "Decoder", url: "git@github.com:spacenation/decoder.swift.git", from: "0.4.0"),
-        .package(name: "Binary", url: "git@github.com:spacenation/binary.swift.git", from: "0.1.1")
+        .package(name: "Functional", url: "git@github.com:spacenation/functional-swift.git", from: "0.3.2"),
+        .package(name: "Binary", url: "git@github.com:spacenation/binary-swift.git", from: "0.1.1")
     ],
     targets: [
-        .target(name: "BinaryDecoder", dependencies: ["Decoder", "Binary"]),
+        .target(name: "BinaryDecoder", dependencies: ["Functional", "Binary"]),
         .testTarget(name: "BinaryDecoderTests", dependencies: ["BinaryDecoder"])
     ]
 )

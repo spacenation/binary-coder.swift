@@ -1,13 +1,12 @@
 import Foundation
-import Decoder
 import Binary
 
-public let bit: Decoder<BinaryReader, Bit, BinaryDecodingFailure> =
-    Decoder {
+public let bit: BinaryDecoder<Bit> =
+    BinaryDecoder {
         input in
             if let (head, tail) = input.readBit() {
                 return .success((head, tail))
             } else {
-                return .failure(.outOfBounds)
+                return .failure(.outOfBounds(input.cursor + 1))
             }
     }
