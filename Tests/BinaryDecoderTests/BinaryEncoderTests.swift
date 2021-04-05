@@ -3,7 +3,7 @@ import BinaryDecoder
 
 final class BinaryEncoderTests: XCTestCase {
     func testEncodeBits() {
-        let binary = BinaryEncoder()
+        let binary = LegacyBinaryEncoder()
         XCTAssertEqual(binary.cursor, 0)
         
         binary.encodeBit(1)
