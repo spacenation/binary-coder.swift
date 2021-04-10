@@ -7,7 +7,7 @@ public protocol BinaryDecodable {
 
 public extension BinaryDecodable {
     static func decode(from data: Data) throws -> Self {
-        switch Self.binaryDecoder.decode(BinaryReader(bytes: data.map { $0 })) {
+        switch Self.binaryDecoder(data.map { $0 }) {
         case .success((let element, _)):
             return element
         case .failure(let error):

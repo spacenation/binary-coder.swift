@@ -5,6 +5,18 @@ import Binary
 
 final class BinaryDecoderTests: XCTestCase {
     
+    func testSequenceA() {
+        let byte: Decoder<Bit, List<Bit>> = bit.count(1) *> bit.count(8) <* bit.count(7)
+        
+        
+        switch byte([0b0000_1111, 0b0000_0000]) {
+        case .success((let element, _)):
+            XCTAssertEqual(element, [.zero, .zero, .zero, .one, .one, .one, .one, .zero])
+        case .failure(_):
+            XCTFail()
+        }
+    }
+    
     func testTypeDecoding() {
         struct Options: Equatable {
             let this: UInt8
@@ -13,7 +25,7 @@ final class BinaryDecoderTests: XCTestCase {
         
         let coder = type(Options.self)
         
-        switch coder.decode(BinaryReader(bytes: [0b0000_0001, 0b0000_0010])) {
+        switch coder([0b0000_0001, 0b0000_0010]) {
         case .success((let options, _)):
             XCTAssertEqual(options, Options(this: 1, that: 2))
         case .failure(_):
@@ -29,14 +41,14 @@ final class BinaryDecoderTests: XCTestCase {
             let other: UInt16
         }
         
-        var coder: BinaryDecoder<Options> {
+        var coder: Decoder<Bit, Options> {
             curry(Options.init)
                 <^> type(UInt8.self)
                 <*> bit.count(8).discardThen(type(UInt8.self))
                 <*> type(UInt16.self)
         }
         
-        switch coder.decode(BinaryReader(bytes: [0b0000_0001, 0b0000_0000, 0b0000_0010, 0b0000_0011, 0b0000_0000])) {
+        switch coder([0b0000_0001, 0b0000_0000, 0b0000_0010, 0b0000_0011, 0b0000_0000]) {
         case .success((let options, _)):
             XCTAssertEqual(options, Options(this: 1, that: 2, other: 3))
         case .failure(_):
@@ -48,7 +60,7 @@ final class BinaryDecoderTests: XCTestCase {
     func testBitDecoder() {
         let coder = zero <|> one *> bit
         
-        switch coder.decode(BinaryReader(bytes: [0b0101_0000])) {
+        switch coder([0b0101_0000]) {
         case .success(_):
             print("OK")
         case .failure(_):

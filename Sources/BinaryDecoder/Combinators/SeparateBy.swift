@@ -1,7 +1,7 @@
 import Foundation
 
-public extension BinaryDecoder {
-    func separate<A>(by separator: BinaryDecoder<A>) -> BinaryDecoder<[Element]> {
+public extension Decoder {
+    func separate<A>(by separator: Decoder<Primitive, A>) -> Decoder<Primitive, [Element]> {
         separator
             .discardThen(self)
             .many

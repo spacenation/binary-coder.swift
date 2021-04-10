@@ -2,16 +2,21 @@ import Foundation
 @_exported import Binary
 @_exported import Functional
 
-public struct BinaryDecoder<Element> {
-    public typealias Output = Result<(element: Element, next: BinaryReader), BinaryDecodingFailure>
-    
-    public let decode: (BinaryReader) -> Output
-    
-    public init(decode: @escaping (BinaryReader) -> Output) {
-        self.decode = decode
-    }
-    
-    func callAsFunction(_ input: BinaryReader) -> Output {
-        decode(input)
+public typealias BinaryDecoder<Element> = Decoder<Bit, Element>
+
+public extension Decoder where Primitive == Bit {
+    func callAsFunction(_ bytes: [UInt8]) -> Output {
+        decode(DecoderState(list: List(bytes.bits), offset: 0))
     }
 }
+
+public extension List where Element == Bit {
+    var byte: UInt8 {
+        self.reduce(0) { accumulated, current in
+            accumulated << 1 | (current == .one ? 1 : 0)
+        }
+    }
+}
+
+
+
