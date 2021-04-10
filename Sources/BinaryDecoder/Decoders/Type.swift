@@ -1,12 +1,11 @@
 import Foundation
 import Binary
 
-public func type<T>(_ type: T.Type) -> BinaryDecoder<T> {
-    BinaryDecoder { input in
-        if let (head, tail) = input.read(type) {
-            return .success((head, tail))
-        } else {
-            return .failure(.outOfBounds(input.cursor + MemoryLayout<T>.size))
+public func type<T>(_ type: T.Type) -> Decoder<Bit, T> {
+    byte.count(MemoryLayout<T>.size)
+        .map { data in
+            withUnsafeBytes(of: Data(data).prefix(MemoryLayout<T>.size / 8)) {
+                $0.baseAddress!.assumingMemoryBound(to: T.self).pointee
+            }
         }
-    }
 }

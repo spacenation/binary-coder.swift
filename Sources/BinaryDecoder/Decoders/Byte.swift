@@ -1,4 +1,4 @@
 import Foundation
 import Binary
 
-public let byte: BinaryDecoder<UInt8> = type(UInt8.self)
+public let byte: Decoder<Bit, UInt8> = bit.count(8).map { $0.byte }
