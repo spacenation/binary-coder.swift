@@ -6,7 +6,7 @@ public extension Decoder {
             .discardThen(self)
             .many
             .apply(
-                self.map(curry(Array.init))
+                self.map(curry({ [$0] + $1 }))
             )
     }
 }
