@@ -1,6 +1,6 @@
 import Foundation
 @_exported import Binary
-@_exported import Functional
+@_exported import Decoder
 
 public typealias BinaryDecoder<Element> = Decoder<Bit, Element>
 
