@@ -1,7 +1,5 @@
 import XCTest
 import BinaryDecoder
-import Functional
-import Binary
 
 final class BinaryDecoderTests: XCTestCase {
     

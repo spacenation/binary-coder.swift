@@ -3,38 +3,38 @@
     "pins": [
       {
         "package": "Binary",
-        "repositoryURL": "git@github.com:spacenation/binary.swift.git",
+        "repositoryURL": "git@github.com:spacenation/swift-binary.git",
         "state": {
           "branch": null,
-          "revision": "b66515c8f8476d4be165354b3d0c994ecdfdedfb",
-          "version": "0.1.2"
-        }
-      },
-      {
-        "package": "Currying",
-        "repositoryURL": "git@github.com:spacenation/currying.swift.git",
-        "state": {
-          "branch": null,
-          "revision": "75dca19133506bee5390b847ac54801f57ec67ae",
-          "version": "0.2.1"
+          "revision": "84d1d0309736232da7f3473c8c7609aa436e1b8a",
+          "version": "0.1.7"
         }
       },
       {
         "package": "Decoder",
-        "repositoryURL": "git@github.com:spacenation/decoder.swift.git",
+        "repositoryURL": "git@github.com:spacenation/swift-decoder.git",
         "state": {
           "branch": null,
-          "revision": "cb25aef34f18f1da6b8a099578f83e3ae69a05a3",
-          "version": "0.4.0"
+          "revision": "5034b00edc27d2fd116e20a4e1b3f0279df193a2",
+          "version": "0.2.2"
         }
       },
       {
-        "package": "Functional",
-        "repositoryURL": "git@github.com:spacenation/functional.swift.git",
+        "package": "Functions",
+        "repositoryURL": "git@github.com:spacenation/swift-functions.git",
         "state": {
           "branch": null,
-          "revision": "2c25b0638f48ede4c68a8b6ec0c71b81a1d31085",
+          "revision": "bb058100c78cfed9bf894569f66d5d0ee837fe8f",
           "version": "0.3.0"
+        }
+      },
+      {
+        "package": "List",
+        "repositoryURL": "git@github.com:spacenation/swift-list.git",
+        "state": {
+          "branch": null,
+          "revision": "fb70a00e7a7cd6fa47ab7fd509ab638a1fe81f04",
+          "version": "0.3.3"
         }
       }
     ]
