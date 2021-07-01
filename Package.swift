@@ -9,7 +9,7 @@ let package = Package(
         .library(name: "BinaryDecoder", targets: ["BinaryDecoder"])
     ],
     dependencies: [
-        .package(name: "Decoder", url: "git@github.com:spacenation/swift-decoder.git", from: "0.2.2"),
+        .package(name: "Decoder", url: "git@github.com:spacenation/swift-decoder.git", from: "0.2.3"),
         .package(name: "Binary", url: "git@github.com:spacenation/swift-binary.git", from: "0.1.7")
     ],
     targets: [
