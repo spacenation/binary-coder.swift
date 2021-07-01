@@ -1,5 +1,4 @@
 // swift-tools-version:5.4
-// The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
@@ -9,7 +8,7 @@ let package = Package(
         .library(name: "BinaryDecoder", targets: ["BinaryDecoder"])
     ],
     dependencies: [
-        .package(name: "Decoder", url: "git@github.com:spacenation/swift-decoder.git", from: "0.2.5"),
+        .package(name: "Decoder", url: "git@github.com:spacenation/swift-decoder.git", from: "0.2.6"),
         .package(name: "Binary", url: "git@github.com:spacenation/swift-binary.git", from: "0.1.7")
     ],
     targets: [
